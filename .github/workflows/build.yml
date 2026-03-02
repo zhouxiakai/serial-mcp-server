@@ -1,0 +1,20 @@
+name: Build EXE
+on: [workflow_dispatch] # 允许手动点击运行
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Build Release
+        run: cargo build --release
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: serial-mcp-exe
+          path: target/release/*.exe
